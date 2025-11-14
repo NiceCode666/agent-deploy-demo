@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>部署演示应用</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .env-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 20px 0;
+        }
+        
+        .env-staging {
+            background: #ffa726;
+            color: white;
+        }
+        
+        .env-production {
+            background: #66bb6a;
+            color: white;
+        }
+        
+        .info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .info-item {
+            margin: 10px 0;
+            color: #666;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .timestamp {
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 部署演示应用</h1>
+        <div id="env-badge" class="env-badge env-staging">预发环境</div>
+        <p style="color: #666; margin-top: 20px;">这是一个用于演示自动化部署流程的简单应用</p>
+        
+        <div class="info">
+            <div class="info-item">
+                <span class="info-label">环境类型：</span>
+                <span id="env-type">预发环境</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">部署时间：</span>
+                <span id="deploy-time">-</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">应用版本：</span>
+                <span id="app-version">1.0.0</span>
+            </div>
+        </div>
+        
+        <div class="timestamp">
+            页面加载时间: <span id="load-time"></span>
+        </div>
+    </div>
+    
+    <script>
+        // 根据端口判断环境
+        const port = window.location.port;
+        const envBadge = document.getElementById('env-badge');
+        const envType = document.getElementById('env-type');
+        
+        if (port === '8081' || window.location.hostname.includes('production')) {
+            envBadge.textContent = '生产环境';
+            envBadge.className = 'env-badge env-production';
+            envType.textContent = '生产环境';
+        } else {
+            envBadge.textContent = '预发环境';
+            envBadge.className = 'env-badge env-staging';
+            envType.textContent = '预发环境';
+        }
+        
+        // 显示部署时间
+        document.getElementById('deploy-time').textContent = new Date().toLocaleString('zh-CN');
+        document.getElementById('load-time').textContent = new Date().toLocaleString('zh-CN');
+    </script>
+</body>
+</html>
+
